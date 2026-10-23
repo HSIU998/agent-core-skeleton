@@ -1,11 +1,17 @@
 # agent-core-skeleton
 
+[![tests](https://github.com/HSIU998/agent-core-skeleton/actions/workflows/tests.yml/badge.svg)](https://github.com/HSIU998/agent-core-skeleton/actions/workflows/tests.yml)
+
 > A skeleton of a local, long-term-memory multi-agent core, rewritten from a system I have run for almost two years. State (memory, identity, drives) lives outside the model, so the model can be swapped without losing who the agent is. Every technique ships with a test that shows what breaks when you remove it. Runs without a GPU or any model.
 
 > **架構與決定是我的；程式由 AI 撰寫。**
 > 我負責：要做什麼、分幾層、怎樣才算過關、壞了怎麼抓得到。AI 負責：照規格寫碼、讀碼、跑測試。
 
 **它解決的問題：** AI 換了模型、開了新視窗、被廠商下架，記憶和身分就跟著消失。這套骨架把記憶、身分、狀態放在本地，由程式保證每一輪都送得到，模型隨時可以換。
+
+![一輪對話怎麼跑：程式先撈記憶，嘴只負責說，對話另存](docs/turn.svg)
+
+<sub>照 `demo/turn.py` 畫：程式先撈記憶、嘴只負責把材料變成一句話、對話另存不混進記憶；身分寫入另走閘門（`demo/gate.py`），驅動值每輪更新（`demo/state.py`）。</sub>
 
 ## 三十秒看懂：跑一次示範
 
@@ -34,7 +40,7 @@ python -m demo.run_demo
 python -m unittest discover -s tests -v    # 55 tests, 不需要 GPU、不需要模型、不需要第三方套件
 ```
 
-需要 Python 3.10 以上（3.10 實測）。`jieba`、`OpenCC` 有裝就用、沒裝就退回字元雙字，測試兩種情況都過。想接真的模型：設 `DEMO_MOUTH=ollama` 和 `OLLAMA_MODEL=<模型名>`（預設連本機 Ollama 的預設位址）。
+需要 Python 3.10 以上（3.10 實測；GitHub Actions 每次推送在 3.10 與 3.12 上各跑一次，見 `.github/workflows/tests.yml`）。`jieba`、`OpenCC` 有裝就用、沒裝就退回字元雙字，測試兩種情況都過；選裝清單在 `requirements-optional.txt`。想接真的模型：設 `DEMO_MOUTH=ollama` 和 `OLLAMA_MODEL=<模型名>`（預設連本機 Ollama 的預設位址）。
 
 ## 拿掉這個做法，會怎麼壞
 

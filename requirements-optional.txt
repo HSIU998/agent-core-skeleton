@@ -1,0 +1,5 @@
+# 全部選裝。沒裝也能跑完示範和測試（retrieval/keywords.py 會退回字元雙字）。
+# jieba：中文斷詞切關鍵字
+jieba
+# OpenCC：斷詞前繁轉簡（import opencc；OpenCC("t2s")）
+opencc-python-reimplemented

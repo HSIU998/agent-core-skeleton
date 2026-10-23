@@ -1,0 +1,27 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      # 不裝任何第三方套件：測試和示範都要在乾淨的 Python 上過
+      - name: Run tests
+        run: python -m unittest discover -s tests -v
+      - name: Run demo
+        run: python -m demo.run_demo
+      - name: Run verification examples
+        run: |
+          python -m verification.daily_checkup verification/examples/today.log --known verification/examples/known.json --baseline verification/examples/baseline.json
+          python -m verification.closure_check verification/examples/ledger.json || test $? -eq 1

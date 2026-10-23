@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" width="900" height="340" font-family="system-ui, 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2f4a63"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="900" height="340" fill="#ffffff"/>
+  <text x="20" y="28" font-size="15" font-weight="700" fill="#17202a">一輪對話怎麼跑（demo/turn.py）</text>
+  <text x="20" y="48" fill="#5b6875">程式先撈記憶，嘴只負責把材料變成一句話；每一段都計時。</text>
+
+  <!-- main pipeline -->
+  <g stroke="#2f4a63" stroke-width="1.5" fill="#ffffff">
+    <rect x="20" y="70" width="150" height="86" rx="6"/>
+    <rect x="215" y="70" width="200" height="86" rx="6"/>
+    <rect x="460" y="70" width="200" height="86" rx="6"/>
+    <rect x="705" y="70" width="175" height="86" rx="6"/>
+  </g>
+  <g stroke="#2f4a63" stroke-width="1.5" marker-end="url(#a)">
+    <line x1="170" y1="113" x2="213" y2="113"/>
+    <line x1="415" y1="113" x2="458" y2="113"/>
+    <line x1="660" y1="113" x2="703" y2="113"/>
+  </g>
+  <g fill="#17202a">
+    <text x="95" y="100" text-anchor="middle" font-weight="700">收到一句話</text>
+    <text x="95" y="122" text-anchor="middle" fill="#5b6875" font-size="12">user_text</text>
+
+    <text x="315" y="94" text-anchor="middle" font-weight="700">程式先撈記憶</text>
+    <text x="315" y="114" text-anchor="middle" font-size="12">store.recall：混合評分＋近似去重</text>
+    <text x="315" y="132" text-anchor="middle" font-size="12" fill="#5b6875">不問模型要不要查</text>
+    <text x="315" y="148" text-anchor="middle" font-size="11" fill="#c77a12">timing.recall</text>
+
+    <text x="560" y="94" text-anchor="middle" font-weight="700">嘴把材料變成一句話</text>
+    <text x="560" y="114" text-anchor="middle" font-size="12">mouth.speak(名字, 記憶, 這句)</text>
+    <text x="560" y="132" text-anchor="middle" font-size="12" fill="#5b6875">嘴可替換：假嘴／Ollama</text>
+    <text x="560" y="148" text-anchor="middle" font-size="11" fill="#c77a12">timing.generate</text>
+
+    <text x="792" y="94" text-anchor="middle" font-weight="700">寫回</text>
+    <text x="792" y="114" text-anchor="middle" font-size="12">log_dialogue：對話另存一張表</text>
+    <text x="792" y="132" text-anchor="middle" font-size="12" fill="#5b6875">不混進記憶</text>
+    <text x="792" y="148" text-anchor="middle" font-size="11" fill="#c77a12">timing.write_back</text>
+  </g>
+
+  <!-- two other doors -->
+  <text x="20" y="196" font-size="13" font-weight="700" fill="#17202a">另外兩條路（不在這一輪的主線上）</text>
+  <g stroke="#8a9bb0" stroke-width="1.5" stroke-dasharray="5 4" fill="#ffffff">
+    <rect x="20" y="208" width="400" height="66" rx="6"/>
+    <rect x="460" y="208" width="420" height="66" rx="6"/>
+  </g>
+  <g fill="#17202a">
+    <text x="36" y="232" font-weight="700">動到身分 → 閘門</text>
+    <text x="36" y="252" font-size="12">demo/gate.py：allow／deny／degrade 三種結果，每次留稽核</text>
+    <text x="36" y="268" font-size="12" fill="#5b6875">模型的輸出想改名字 → deny，名字還是原來的</text>
+
+    <text x="476" y="232" font-weight="700">驅動值每一輪更新、寫回核心</text>
+    <text x="476" y="252" font-size="12">demo/state.py：成長最多算 8 小時、下限 0.02、滿足用乘法衰減</text>
+    <text x="476" y="268" font-size="12" fill="#5b6875">跑 72 小時、滿足 50 次，最低 0.0750，不會歸零</text>
+  </g>
+
+  <!-- three layers -->
+  <g font-size="12" fill="#5b6875">
+    <text x="20" y="312">三層分開：</text>
+    <text x="90" y="312" fill="#2f4a63" font-weight="700">記憶與身分（程式保證每輪送到）</text>
+    <text x="330" y="312" fill="#2f4a63" font-weight="700">狀態（每輪更新、寫回）</text>
+    <text x="520" y="312" fill="#c77a12" font-weight="700">生成（可替換，「換嘴不換人」）</text>
+  </g>
+</svg>
