@@ -1,0 +1,6 @@
+{
+  "fallback:embedding": 3,
+  "skipped:backup": 1,
+  "timeout:vision": 2,
+  "error:watchdog": 4
+}

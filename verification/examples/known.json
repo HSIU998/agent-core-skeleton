@@ -1,0 +1,6 @@
+[
+  {"pattern": "^fallback:embedding", "name": "embedding falls back to cpu on cold start", "since": "2026-01-02"},
+  {"pattern": "^skipped:backup", "name": "backup skips when the drive is not mounted", "since": "2026-01-05"},
+  {"pattern": "^timeout:vision", "name": "vision service times out under load", "since": "2026-01-08"},
+  {"pattern": "^error:watchdog", "name": "watchdog restart loop", "since": "2026-01-03"}
+]

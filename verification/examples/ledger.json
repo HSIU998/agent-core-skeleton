@@ -1,0 +1,63 @@
+[
+  {
+    "id": "C-1",
+    "goal": "when the user says something heavy, the agent does not sit silent for seconds before it starts to answer",
+    "measure": "pre-generation seconds for that turn",
+    "threshold": "<= 2 s",
+    "result": "passed",
+    "evidence": "pre-generation 6.1 s -> 1.4 s on the replayed turn; idle wait 4,200 ms -> 0 ms",
+    "mechanism_ok": true,
+    "goal_measured": true
+  },
+  {
+    "id": "C-2",
+    "goal": "the speaker tag on a stored memory matches who actually said it",
+    "measure": "tags compared with the raw records",
+    "threshold": "100%",
+    "result": "passed",
+    "evidence": "offline comparison 1,200 / 1,200",
+    "mechanism_ok": true,
+    "goal_measured": true
+  },
+  {
+    "id": "C-3",
+    "goal": "the agent recalls events from outside the current conversation window",
+    "measure": "exam: is the right memory in the top 3",
+    "threshold": ">= 50% of questions",
+    "result": "failed",
+    "evidence": "1 of 4 questions; the mechanism ran (out-of-window memories were fetched) but the answer did not reach the top 3",
+    "mechanism_ok": true,
+    "goal_measured": true
+  },
+  {
+    "id": "C-4",
+    "goal": "duplicate alarms stop flooding the log",
+    "measure": "alarm rows per hour per fingerprint",
+    "threshold": "<= 1",
+    "result": "observing",
+    "evidence": "deployed; counting for a week",
+    "since": "2026-01-10",
+    "mechanism_ok": true,
+    "goal_measured": false
+  },
+  {
+    "id": "C-5",
+    "goal": "texts longer than the accelerator's fixed length fall back to CPU instead of being cut",
+    "measure": "fallback counter on the health endpoint",
+    "threshold": "counter increments; no silent truncation",
+    "result": "passed",
+    "evidence": "counter = 3 after 3 long texts",
+    "mechanism_ok": true,
+    "goal_measured": false
+  },
+  {
+    "id": "C-6",
+    "goal": "the router falls back to rules when the classifier fails",
+    "measure": "",
+    "threshold": "",
+    "result": "passed",
+    "evidence": "unit test green",
+    "mechanism_ok": true,
+    "goal_measured": false
+  }
+]
