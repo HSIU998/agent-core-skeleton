@@ -155,7 +155,7 @@ verdict: not closed, release blocked
 - 不需要 GPU、不需要模型、不需要第三方套件就能跑完示範和測試。
 - 程式由 AI 撰寫；我負責規格、分層、驗收標準，和「壞了怎麼抓得到」。
 - 角色是空白的 `persona_a`、`persona_b`。原系統裡每個角色長期累積的記憶、對話、人格設定，**都不在這裡**。
-- 為什麼做、做了哪些決定、原系統的實際數字，在作品集：https://claude.ai/artifact/PbgZAdvGaXu14RMGA5iBX4 。這個倉庫不重講那些。
+- 為什麼做、做了哪些決定、原系統的實際數字，在作品集：https://hsiu998.github.io/ 。這個倉庫不重講那些。
 
 ## 還沒放進來的（照實寫）
 
