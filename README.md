@@ -46,18 +46,36 @@ python -m unittest discover -s tests -v    # 55 tests, 不需要 GPU、不需要
 
 每個做法的測試裡都附一個反例：把做法拿掉，看測試怎麼失敗。這是這個倉庫跟「功能清單」最不一樣的地方。
 
-| 做法 | 拿掉它之後 | 測試 |
-|---|---|---|
-| 「要不要查記憶」的判斷失敗時退回規則 | 模型分類失敗就一律回「不查」，「你記得上次去海邊嗎」這句不會去撈記憶 | `test_retrieval.py::test_counterexample_all_false_on_failure_skips_memory` |
-| 遞補鏈先檢查設定 | 備援跟主力是同一顆、同一家，一次故障全部不回；鏈會先把這兩個問題報出來 | `test_reliability.py::test_counterexample_backup_equal_to_primary_is_flagged` |
-| 解析失敗就明講，不填預設值 | 失敗時填「中性」，壞掉的回答跟真的「中性」一模一樣，下游分不出來 | `test_reliability.py::test_counterexample_defaults_make_garbage_look_normal` |
-| MMR 去重 | 前兩名是同一件事換句話說 | `test_retrieval.py::test_counterexample_without_mmr_top_two_are_the_same_event` |
-| BM25 而不是命中次數 | 聊天氣的句子因為字多，贏過真正的關鍵字 | `test_retrieval.py::test_counterexample_raw_hit_count_prefers_the_common_word` |
-| 狀態放在模型外 | 記憶放在模型的對話歷史裡，換模型等於清空 | `test_demo.py::test_swap_mouth_keeps_memory` |
-| 閉環檢查：目標沒量過不准標「好了」 | 只看「程式有跑」的檢查，對三項沒量目標的修改亮綠 | `test_verification.py::test_counterexample_mechanism_only_check_passes_an_unfinished_ledger` |
-| 審查員先用埋好的錯考過，量召回也量誤報 | 只量召回，「每一行都有錯」的審查員拿滿分 | `test_verification.py::test_counterexample_recall_alone_trusts_the_reviewer_that_flags_everything` |
-| 沙盒守門 | 同一段測試把檔案寫進正式資料夾，沒人擋、沒人數 | `test_verification.py::test_counterexample_without_the_guard_the_test_writes_into_production` |
-| 每日體檢「新的、變嚴重的排最上面」 | 照次數排，十一個慢性問題把唯一的新問題擠到最後一行 | `test_verification.py::test_counterexample_naive_report_buries_the_new_problem` |
+1. **「要不要查記憶」的判斷失敗時退回規則**<br>
+   拿掉之後：模型分類失敗就一律回「不查」，「你記得上次去海邊嗎」這句不會去撈記憶。<br>
+   測試：`test_retrieval.py::test_counterexample_all_false_on_failure_skips_memory`
+2. **遞補鏈先檢查設定**<br>
+   拿掉之後：備援跟主力是同一顆、同一家，一次故障全部不回；鏈會先把這兩個問題報出來。<br>
+   測試：`test_reliability.py::test_counterexample_backup_equal_to_primary_is_flagged`
+3. **解析失敗就明講，不填預設值**<br>
+   拿掉之後：失敗時填「中性」，壞掉的回答跟真的「中性」一模一樣，下游分不出來。<br>
+   測試：`test_reliability.py::test_counterexample_defaults_make_garbage_look_normal`
+4. **MMR 去重**<br>
+   拿掉之後：前兩名是同一件事換句話說。<br>
+   測試：`test_retrieval.py::test_counterexample_without_mmr_top_two_are_the_same_event`
+5. **BM25 而不是命中次數**<br>
+   拿掉之後：聊天氣的句子因為字多，贏過真正的關鍵字。<br>
+   測試：`test_retrieval.py::test_counterexample_raw_hit_count_prefers_the_common_word`
+6. **狀態放在模型外**<br>
+   拿掉之後：記憶放在模型的對話歷史裡，換模型等於清空。<br>
+   測試：`test_demo.py::test_swap_mouth_keeps_memory`
+7. **閉環檢查：目標沒量過不准標「好了」**<br>
+   拿掉之後：只看「程式有跑」的檢查，對三項沒量目標的修改亮綠。<br>
+   測試：`test_verification.py::test_counterexample_mechanism_only_check_passes_an_unfinished_ledger`
+8. **審查員先用埋好的錯考過，量召回也量誤報**<br>
+   拿掉之後：只量召回，「每一行都有錯」的審查員拿滿分。<br>
+   測試：`test_verification.py::test_counterexample_recall_alone_trusts_the_reviewer_that_flags_everything`
+9. **沙盒守門**<br>
+   拿掉之後：同一段測試把檔案寫進正式資料夾，沒人擋、沒人數。<br>
+   測試：`test_verification.py::test_counterexample_without_the_guard_the_test_writes_into_production`
+10. **每日體檢「新的、變嚴重的排最上面」**<br>
+    拿掉之後：照次數排，十一個慢性問題把唯一的新問題擠到最後一行。<br>
+    測試：`test_verification.py::test_counterexample_naive_report_buries_the_new_problem`
 
 ## 我怎麼驗：四支工具
 
